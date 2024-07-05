@@ -2,21 +2,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def add_reverb(data, reflection_coef):
-    # if data.shape[0] > data.shape[1]:
-    #     data = np.transpose(data)
-
+   
     fs = 1000  # sample rate
     room_dim = np.array([4, 4, 2.5])  # dimensions of room (meters)
     mic_pos = np.array([1, 1, 1.6])  # location of mic in room
     src_pos = np.array([2, 2, 1])  # location of sound source in room
-    virtual_sources_num = 12  # number of virtual sources: (2*virtual_sources_num+1)^3
+    virtual_sources_num = 12  # number of virtual sources: 2*virtual_sources_num+1)^3
 
     # creating room response
     room_response = rir(fs, mic_pos, virtual_sources_num, reflection_coef, room_dim, src_pos)
     plt.figure(0)
     plt.plot(room_response)
     plt.title('Room response')
-    # plt.show()
+    plt.show()
 
     # Adding reverb to data
     reverb_data = fconv(data, room_response, 1)  # adding reverb
